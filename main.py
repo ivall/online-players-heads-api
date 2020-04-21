@@ -25,7 +25,7 @@ def example(ip,size):
   url = 'http://%s'%request.host+'/'+ip+'/'+size
   r = requests.get(url)
   players = r.json()
-  return render_template('index.html',avatars=players)
+  return render_template('index.html', avatars=players)
 
 if __name__ == '__main__':
     app.run()
