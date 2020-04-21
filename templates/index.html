@@ -1,3 +1,7 @@
-{% for avatar in avatars %}
-<img src="{{avatar}}"></img>
-{% endfor %}
+{% if "error" in avatars %}
+    Bład podczas łączenia z api: {{avatars.error}}
+{% else %}
+    {% for avatar in avatars %}
+    <img src="{{avatar}}"></img>
+    {% endfor %}
+{% endif %}
