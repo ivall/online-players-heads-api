@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 import requests
 
 app = Flask(__name__)
@@ -12,7 +12,7 @@ def index(ip,size):
   r.raise_for_status()
   if r.json()['online'] == False:
     return jsonify({"error": "Server is offline"})
-  if "list" not in r.json()['players']:
+  elif "list" not in r.json()['players']:
     return jsonify({"error": "Server do not share playerlist"})
   players = r.json()['players']['list']
   for player in players:
@@ -22,13 +22,10 @@ def index(ip,size):
 
 @app.route('/example/<ip>/<size>')
 def example(ip,size):
-  avatars = []
-  r = requests.get('https://api.mcsrvstat.us/2/'+ip)
-  r.raise_for_status()
-  players = r.json()['players']['list']
-  for player in players:
-    avatars.append('https://minotar.net/avatar/'+player+'/'+size+'')
-  return render_template('index.html',avatars=avatars)
+  url = 'http://%s'%request.host+'/'+ip+'/'+size
+  r = requests.get(url)
+  players = r.json()
+  return render_template('index.html',avatars=players)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
