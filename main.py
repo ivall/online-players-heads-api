@@ -28,4 +28,4 @@ def example(ip,size):
   return render_template('index.html',avatars=players)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run()
