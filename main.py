@@ -2,8 +2,6 @@ from flask import Flask, render_template, jsonify
 import requests
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secretKey196790!!!)#%()'
-
 
 @app.route('/<ip>/<size>')
 def index(ip,size):
